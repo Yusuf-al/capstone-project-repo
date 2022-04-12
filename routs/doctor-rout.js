@@ -26,4 +26,6 @@ router
     docController.getChamberForm
   )
   .post(docController.addChamber);
+router.route("/doctor/:slug").get(docController.getDetails);
+
 module.exports = router;

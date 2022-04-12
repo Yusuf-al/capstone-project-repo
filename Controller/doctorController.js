@@ -136,6 +136,42 @@ exports.addChamber = async (req, res, next) => {
   }
 };
 
+exports.getDetails = async (req, res, next) => {
+  try {
+    const doc = await doctors
+      .findOne({ slug: req.params.slug })
+      .populate({
+        path: "myAppoinments",
+        populate: {
+          path: "patientsData",
+        },
+      })
+      .populate({ path: "userDel chambers" });
+
+    let chamList = doc.chambers;
+
+    console.log(req.params.slug);
+    res.status(200).render("docProfileO", {
+      doc,
+      chamList,
+      title: `DocBook || ${doc.name}`,
+    });
+  } catch (error) {
+    res.status(202).send(error.message);
+  }
+};
+
+// const checkTime = (arr) => {
+//   let visitTime;
+//   if (arr[2] === null) {
+//     visitTime = `${arr[0]}-${arr[1]}`;
+//     return visitTime;
+//   } else {
+//     visitTime = "off-day";
+//     return visitTime;
+//   }
+// };
+
 // console.log(req.body.docName);
 //   console.log(req.body.docPhnNumber);
 //   console.log(req.body.docDOB);

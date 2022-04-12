@@ -443,8 +443,9 @@ Doctor Profile page for Nomal User
     padding: 10px;
 }
 .profile-img-dp img{
-    width: 300px;
-    border-radius: 50%;
+    width: 355px;
+    margin-top: 20px;
+    border-radius: 5%;
 }
 .profile-info-dp{
     /* background-color: #6199ff; */
@@ -605,6 +606,14 @@ Chamber List
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-row-gap: 8px;
+}
+
+.timingAdd{
+    display: grid;
+    grid-template-columns: 90px 80px 25px 80px 10px 70px;
+    grid-column-gap: 10px;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .timing>p{
@@ -1005,7 +1014,6 @@ ul{
 }
 .timing{
     display: grid;
-    grid-template-columns: 90px 80px 25px 80px 10px 70px;
     grid-column-gap: 10px;
     align-items: center;
     justify-content: space-around;
