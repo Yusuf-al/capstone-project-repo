@@ -10,7 +10,7 @@ router
     authController.authPer("doctor"),
     docController.getform
   )
-  .post(docController.addProfile);
+  .post(docController.upload, docController.addProfile);
 router
   .route("/doctor/profile")
   .get(

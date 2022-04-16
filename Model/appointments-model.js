@@ -15,14 +15,17 @@ const appoinmentSchema = new mongoose.Schema(
     patientName: {
       type: String,
     },
-    appointmentData: {
+    patientData: {
       type: mongoose.Schema.ObjectId,
       ref: "PatientsList",
       // required:true
     },
+    healthIssu: {
+      type: String,
+    },
     doctorData: {
       type: mongoose.Schema.ObjectId,
-      ref: "DoctorList",
+      ref: "AllDoctorList",
       // required:true
     },
     chamberData: {
@@ -36,12 +39,12 @@ const appoinmentSchema = new mongoose.Schema(
   }
 );
 
-appoinmentSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "appointmentData",
-  });
-  next();
-});
+// appoinmentSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "appointmentData",
+//   });
+//   next();
+// });
 // appoinmentSchema.pre('aggregate', function (next) {
 //     this.populate({
 //         path: 'patientsData'

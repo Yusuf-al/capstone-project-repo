@@ -27,9 +27,7 @@
 <main class="container">
   <section class="intro-section-dp dp-container">
     <div class="profile-img-dp">
-      <img
-      src="https://images.theconversation.com/files/304957/original/file-20191203-66986-im7o5.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop
-      alt="" />
+      <img src="../img/<%= doc.profileImg%>" alt="" />
     </div>
     <div class="profile-info-dp">
       <h3><%= doc.name%></h3>
@@ -39,7 +37,7 @@
         <p><%= doc.workdPlace%></p>
         <div class="email-dp">
           <i class="far fa-envelope-open"></i>
-          <p><%= doc.userDel.email%></p>
+          <p><%= doc.userDel?.email%></p>
         </div>
         <div class="mobile-dp">
           <i class="fas fa-mobile-alt"></i>
@@ -110,7 +108,9 @@
       </div>
 
       <div class="btn book-btn">
-        <a href="/doctor/<%=doc.slug%>/<%= cham.id%>">Book Appointment</a>
+        <a href="/<%=doc.slug%>/<%= cham.id%>/book-appointment"
+          >Book Appointment</a
+        >
       </div>
     </div>
     <%})%>

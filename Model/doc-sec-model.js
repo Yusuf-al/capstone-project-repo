@@ -62,6 +62,9 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       // required: [true, "Enter Position"],
     },
+    profileImg: {
+      type: String,
+    },
 
     specialties: [{ type: String }],
 

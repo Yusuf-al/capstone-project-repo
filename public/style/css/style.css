@@ -70,7 +70,7 @@ a{
     background-color: #eaf2fa;
     padding: 10px;
     width: 183px;
-    height: 80px;
+    min-height: 80px;
     position: absolute;
     top: 60px;
     right: 0px;
@@ -148,6 +148,10 @@ a{
     border-radius: 50%;
 }
 
+.num-font{
+    font-family: 'Poppins',sans-serif;
+}
+
 .search-icon{
     margin-left: -30px;
     color: var(--main-font);
@@ -203,14 +207,15 @@ a{
     color: var(--color-opt-light-blue);
     text-transform: capitalize;
     padding:8px 10px;
-    font-size: 25px;
+    font-size: 18px;
+    margin-top: 8px;
 }
 
 .user-info>h4{
     color: var(--scnd-bg-gray);
     text-transform: capitalize;
     padding:0px 10px;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .degree-info{
@@ -224,7 +229,8 @@ a{
 
 .user-img img{
     width: 300px;
-    height: 300px;
+    height: 286px;
+    margin-top: 7px;
     border-radius: 15px;
 }
 
@@ -844,9 +850,10 @@ Doctor Profile Form
     height: auto;
     padding: 20px;
     transition: .5s;
-    border-radius: 20px;
-    box-shadow: inset 0 3px 3px 0px #ffffff,inset 0 9px 10px 0px #ffffff;
-    background: linear-gradient(to bottom, #a0d2fd 0%, #dbf1ffc5 100%);
+    border-radius: 10px;
+    background-color: #022a53;
+    /* box-shadow: inset 0 3px 3px 0px #ffffff,inset 0 9px 10px 0px #ffffff;
+    background: linear-gradient(to bottom, #a0d2fd 0%, #dbf1ffc5 100%); */
 }
 
 #personal{
@@ -871,10 +878,11 @@ Doctor Profile Form
 .form-grp{
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
 
 label{
-color: rgb(25, 12, 129);
+color: rgb(221, 221, 221);
 margin: 10px 0;
 }
 
@@ -999,6 +1007,17 @@ ul{
     color: rgb(226, 226, 226);
   }
 
+  #previewPhoto img{
+    width: 150px;
+    height: 155px;
+    margin-top: 15px;
+    border-radius: 50%;
+  }
+  .upload-Label{
+    display: flex;
+    flex-direction: column;
+  }
+
   /* -----------------
   Patient Data
   ---------------- */
@@ -1028,12 +1047,25 @@ Booking Section
 ---------------- */
 .doc-info{
     display: grid;
-    grid-template-columns: 20% 40% 40%;
-    grid-gap: 20px;
-    align-items: center;
+    grid-template-columns: 10% 20% 20% 45%;
+    grid-gap: 24px;
     margin-top: 10px;
 }
-.doc-photo{
+.doc-inf-add{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 15px;
+}
+
+.doc-info-con{
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    padding: 35px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+}
+.doc-photo img{
     height: 150px;
     width: 150px;
     border-radius: 50%;
@@ -1042,21 +1074,54 @@ Booking Section
     color: white;
     text-align: center;
 }
+.book-visit{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.book-timimg{
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-row-gap: 8px;
+}
+.book-timimg>p{
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 5px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: #e5e5e5;
+}
+.sec-div-book{
+    position: relative;
+}
+.my-self-book{
+    color: #e2e2e2;
+    margin-top: 20px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
 
 /* --------------------
 Doctor Main Profile Page
 -------------------- */
 .doc-main-profile{
     display: grid;
-    grid-template-columns: 25% 75%;
-    grid-column-gap: 20px;
+    grid-template-columns: 22% 75%;
+    grid-column-gap: 50px;
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 .doc-main-left{
-background-color: var(--color-opt-light-blue);
-height: 600px;
-border-radius: 20px;
-padding: 15px;
+    background-color: #ffffff;
+    height: 600px;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+    border-radius: 10px;
 
 }
 
@@ -1177,6 +1242,12 @@ padding: 15px;
     text-align: center;
     padding-right: 62px;
   }
+
+  .col6-x{
+    width: 33px;
+    text-align: center;
+    padding-right: 8px;
+  }
   .column6 i{
     width: 35px;
     background-color: rgb(253, 67, 129);
@@ -1234,12 +1305,21 @@ padding: 15px;
   }
   .doc-info-grp{
       display: grid;
-      grid-template-columns: repeat(2,1fr);
-      grid-gap: 15px;
-      align-items: center;
-      width: 75%;
-      margin-bottom: 50px;
-      padding-left: 10px;
+    grid-template-columns: 250px 1fr;
+    grid-gap: 2px;
+    align-items: center;
+    width: 75%;
+    margin-bottom: 25px;
+    padding-left: 10px;
+  }
+  .sec-com{
+    background-color: #ffffff;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+  }
+  .doc-per-info{
+      margin-top: 22px;
   }
 
   /* ------------
@@ -1299,14 +1379,102 @@ padding: 15px;
       display: block;
   }
 
-  .profile-list a{
-      color:var(--color-opt-gray);
-  }
-  .profile-list{
-      display: flex;
-      align-items: center;
-  }
+  .profileW-list a{
+    color:var(--main-font);
+    margin:10px 10px;
+    font-family: 'Poppins',sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+.profileW-list .icn{
+    margin-right: 15px;
+    color: #001f3d;
+}
+
+.profileW-list{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+}
   .top-title{
     text-align: center;
     margin: 20px;
   }
+  .verypaga{
+    padding: 55px;
+    background: white;
+    width: 557px;
+    margin: 120px auto;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .verypaga img{
+      width: 250px;
+      margin: 5px;
+  }
+
+  /* ---------------------
+        User Profile
+  ------------------- */
+  .user-top{
+    margin-top: 25px;
+}
+.user-profile-info{
+  background-color: #ffffff;
+  min-height: 400px;
+  
+  box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+  border-radius: 10px;
+}
+.my-profile-info{
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-gap: 15px;
+  padding: 15px;
+  margin-left: 50px;
+  margin-top: 35px;
+}
+.my-profile-img img{
+  height: 265px;
+  width: 250px;
+  border-radius: 50%;
+  
+
+}
+.my-profile-title{
+  border-bottom: 1px solid #c7c6c6;
+}
+.my-profile-title h2{
+    padding: 15px;
+    margin-left: 25px;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 500;
+}
+.user-info-list{
+    margin-left: 25px;
+}
+.user-info-list h3{
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.user-info-list p{
+  font-size: 18px;
+  margin-bottom: 24px;
+  font-family: 'Poppins',sans-serif;
+  font-weight: 300;
+}
+
+.user-pro-photo{
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+}
+.user-pro-photo img{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}

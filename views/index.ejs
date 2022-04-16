@@ -23,8 +23,10 @@
       <img src="" alt="" />
     </div>
   </section>
+
   <div class="log-in-popup">
-    <a href="#">Profile</a>
+    <a href="#"><%=pat?.name%></a>
+    <a href="/patient/my-profile">Profile</a>
     <a href="#">Log out</a>
   </div>
 
@@ -90,7 +92,7 @@
     <%doctorList.forEach(doctor=>{%>
     <div class="user-card">
       <div class="user-img">
-        <img src="./img/pictures/coding.png" alt="" />
+        <img src="./img/<%=doctor.profileImg%>" alt="" />
       </div>
       <div class="user-info">
         <h3><%= doctor.name%></h3>
@@ -99,7 +101,7 @@
           <p><%= doctor.currentPosition%>, <%= doctor.workdPlace%></p>
           <div class="contact-info">
             <i class="far fa-envelope-open"></i>
-            <p><%= doctor.userDel.email%></p>
+            <p><%= doctor.userDel?.email%></p>
           </div>
           <div class="contact-info">
             <i class="fas fa-mobile-alt"></i>

@@ -1,7 +1,9 @@
 const doctors = require("../Model/doc-sec-model");
 const chambers = require("../Model/chamber-model");
 const patients = require("../Model/patients-model");
+const users = require("./../Model/user-model");
 const appointments = require("../Model/appointments-model");
+const mongoose = require("mongoose");
 const { findOne } = require("../Model/appointments-model");
 const url = require("url");
 const fetch = require("node-fetch");
@@ -9,22 +11,9 @@ const res = require("express/lib/response");
 
 exports.getall = async (req, res, next) => {
   try {
-    const doctorList = await doctors
-      .find()
-      .populate("userDel")
-      .populate({
-        path: "myAppoinments",
-        populate: {
-          path: "patientsData",
-        },
-      });
-    const List = doctorList.patients;
-    // const mess = "Rendeing";
-    // console.log(doctorList);
+    const doctorList = await doctors.find().populate("userDel");
 
-    // fetch("https://api.covid19api.com/summary")
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data.Global));
+    const List = doctorList.patients;
 
     const getdata = await fetch("https://data.covid19india.org/data.json");
     const resp = await getdata.json();
@@ -34,9 +23,26 @@ exports.getall = async (req, res, next) => {
 
     let data = allRes.cases_time_series[564];
 
+    const token = req.cookies.jwt;
+    const tokenParts = token.split(".");
+    const encodedPayload = tokenParts[1];
+    const rawPayload = atob(encodedPayload);
+    const user = JSON.parse(rawPayload);
+    const UserId = mongoose.mongo.ObjectId(user.id);
+    console.log("user id: " + UserId);
+    console.log(token);
+
+    const patient = await users
+      .findById(user.id)
+      .populate({ path: "patientInfo" });
+    console.log(patient.patientInfo);
+    const pat = patient.patientInfo[0];
+
     res.status(200).render("index", {
       doctorList,
       data,
+      pat,
+      title: "DocBook || Home",
     });
 
     // res.status(200).json({

@@ -1,7 +1,7 @@
 <main class="container doc-main-profile">
   <section class="doc-main-left">
     <div class="doc-photo">
-      <p>Photo</p>
+      <img src="../img/<%=getDoctor.profileImg%>" alt="" />
     </div>
     <div class="doc-gen-info">
       <h3><%= getDoctor.name%></h3>
@@ -10,23 +10,42 @@
         <h5><%= getDoctor.workdPlace%></h5>
       </div>
     </div>
-    <div class="profile-list">
-      <a href="#" onclick="showProfile()">My Profile</a>
-      <a href="#" onclick="showChamberList()">Chambers List</a>
-      <a href="#" onclick="showPatienList()">Patients List</a>
-      <a href="#">Chart</a>
-      <a href="/doctor/add-chamber"> Add chamber</a>
+    <div class="profileW-list">
+      <a href="#" onclick="showProfile()"
+        ><i class="fas fa-user-md icn"></i>My Profile</a
+      >
+      <a href="#" onclick="showChamberList()"
+        ><i class="fas fa-clinic-medical icn"></i>Chambers List</a
+      >
+      <a href="#" onclick="showPatienList()"
+        ><i class="fas fa-users icn"></i>Patients List</a
+      >
+      <a href="#"><i class="far fa-chart-bar icn"></i>Chart</a>
+      <a href="/doctor/add-chamber"
+        ><i class="fas fa-clinic-medical icn"></i> Add chamber</a
+      >
     </div>
   </section>
-  <section id="profile">
+  <section class="sec-com" id="profile">
     <div>
       <h3 class="info-title">Personal Information</h3>
-      <div class="doc-per-info doc-info-grp">
-        <h3 class="info-text"><%= getDoctor.name%></h3>
-        <h5 class="info-text"><%= getDoctor.tobTitle%></h5>
-        <h5 class="info-text"><%= getDoctor.userDel.email%></h5>
-        <h5 class="info-text"><%= getDoctor.phoneNum%></h5>
-        <h5 class="info-text"><%= getDoctor.address%></h5>
+      <div class="doc-info-grp doc-per-info">
+        <div class="user-info-list">
+          <h3>User Full Name</h3>
+          <p class="info-text"><%= getDoctor.name%></p>
+          <h3>Job title</h3>
+          <p class="info-text"><%= getDoctor.tobTitle%></p>
+          <h3>Gander</h3>
+          <p class="info-text"><%= getDoctor.gander%></p>
+        </div>
+        <div class="user-info-list">
+          <h3>Email Address</h3>
+          <p class="info-text"><%= getDoctor.userDel.email%></p>
+          <h3>Phone Number</h3>
+          <p class="info-text"><%= getDoctor.phoneNum%></p>
+          <h3>Parmanent Address</h3>
+          <p class="info-text"><%= getDoctor.address%></p>
+        </div>
       </div>
       <h3 class="info-title">Educational Information</h3>
       <div class="doc-edu-info doc-info-grp">
@@ -57,7 +76,7 @@
       </div>
     </div>
   </section>
-  <section id="chamber-list">
+  <section class="sec-com" id="chamber-list">
     <h2 class="top-title">Chamber List</h2>
     <div class="wrap-table100">
       <div class="table100">
@@ -90,7 +109,7 @@
       </div>
     </div>
   </section>
-  <section id="patient-list">
+  <section class="sec-com" id="patient-list">
     <h2 class="top-title">Patients List</h2>
     <div class="wrap-table100">
       <div class="table100">
@@ -102,56 +121,24 @@
               <th class="column3">Contact No</th>
               <th class="column4">Health Issu</th>
               <th class="column5">Chamber</th>
-              <th class="column6">Date</th>
-              <th class="column6">Action</th>
+              <th class="column6 col6-x">Date</th>
+              <th class="column6 col6-x">Action</th>
             </tr>
           </thead>
           <tbody>
+            <% appointmentsData.forEach((appData,i)=> {%>
             <tr>
-              <td class="column1">1</td>
-              <td class="column2">Akbar</td>
-              <td class="column3">4578982323</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">Khalil Chamber</td>
-              <td class="column6">23/09/2022</td>
-              <td class="column6"><i class="far fa-trash-alt"></i></td>
+              <td class="column1"><%= i+1 %></td>
+              <td class="column2"><%= appData.patientName%></td>
+              <td class="column3 num-font"><%= appData.contactNo%></td>
+              <td class="column4"><%= appData.healthIssu%></td>
+              <td class="column5"><%= appData.chamberData.chamberName%></td>
+              <td class="column6 num-font col6-x">
+                <%= appData.date.toLocaleDateString()%>
+              </td>
+              <td class="column6 col6-x"><i class="far fa-trash-alt"></i></td>
             </tr>
-            <tr>
-              <td class="column1">1</td>
-              <td class="column2">Akbar</td>
-              <td class="column3">4578982323</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">Khalil Chamber</td>
-              <td class="column6">23/09/2022</td>
-              <td class="column6"><i class="far fa-trash-alt"></i></td>
-            </tr>
-            <tr>
-              <td class="column1">1</td>
-              <td class="column2">Akbar</td>
-              <td class="column3">4578982323</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">Khalil Chamber</td>
-              <td class="column6">23/09/2022</td>
-              <td class="column6"><i class="far fa-trash-alt"></i></td>
-            </tr>
-            <tr>
-              <td class="column1">1</td>
-              <td class="column2">Akbar</td>
-              <td class="column3">4578982323</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">Khalil Chamber</td>
-              <td class="column6">23/09/2022</td>
-              <td class="column6"><i class="far fa-trash-alt"></i></td>
-            </tr>
-            <tr>
-              <td class="column1">1</td>
-              <td class="column2">Akbar</td>
-              <td class="column3">4578982323</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">Khalil Chamber</td>
-              <td class="column6">23/09/2022</td>
-              <td class="column6"><i class="far fa-trash-alt"></i></td>
-            </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>

@@ -13,5 +13,6 @@ router
   .get(userController.logInform)
   .post(userController.logIn);
 router.route("/user/:id").get(userController.getUser);
+router.route("/veryfi").get(userController.verifyMail);
 
 module.exports = router;

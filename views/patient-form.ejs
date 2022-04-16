@@ -3,6 +3,7 @@
     action="/patient/add-profile"
     class="doc-profile-form p-form"
     method="post"
+    enctype="multipart/form-data"
   >
     <div class="sec-div information">
       <h2 class="p-title">User Profile</h2>
@@ -56,7 +57,7 @@
         ></textarea>
       </div>
       <div class="form-grp">
-        <label for="user-[hoto">Upload Photo</label>
+        <label for="user-photo">Upload Photo</label>
         <input type="file" name="userPhoto" id="user-photo" />
       </div>
       <div class="form-grp">

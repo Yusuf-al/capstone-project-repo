@@ -1,6 +1,7 @@
 const express = require("express");
 const viewController = require("../Controller/viewController");
 const authController = require("./../Controller/userController");
+const docCon = require("./../Controller/doctorController");
 // const bookApp = require("./book-rout");
 
 const router = express.Router();
@@ -8,7 +9,14 @@ const router = express.Router();
 // router.use("/:slug/book-appointment", bookApp);
 // router.get("/limit", viewController.chamberInfo);
 
-router.get("/", viewController.getall);
+router.get(
+  "/",
+  authController.authRoute,
+  authController.authPer("g-user"),
+  viewController.getall
+);
+router.get("/test-img", docCon.imgForm);
+router.post("/test-img", docCon.upload, docCon.imgAdd);
 // router.get("/ad-doctor", viewController.docform);
 // router.post("/ad-doctor", viewController.addDoctor);
 // router.post('/:slug/book-appointment', viewController.appoint);

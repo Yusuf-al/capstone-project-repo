@@ -3,26 +3,40 @@ const doctors = require("./../Model/doc-sec-model");
 const chamber = require("./../Model/chamber-model");
 const users = require("./../Model/user-model");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const app = require("../app");
+const newTest = require("./../Model/img");
+const { redirect } = require("express/lib/response");
 
-exports.getform = async (req, res, next) => {
-  // console.log(req.body.user);
-  // outputs 'bob
-  res.status(200).render("docinput");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/img/");
+  },
+  filename: (req, file, cb) => {
+    let extension = file.mimetype;
+    extension = extension.substring(
+      extension.indexOf("/") + 1,
+      extension.length
+    );
+    let filename = file.fieldname + "-" + Date.now() + "." + extension;
+    cb(null, filename);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
 };
 
-exports.addProfile = async (req, res, next) => {
-  let spe = req.body.speciality;
-  spe = spe.split(",");
-  let links = [req.body.facebook, req.body.linkedIn];
-  let school = [req.body.doc10year, req.body.doc10school, req.body.doc10per];
-  let college = [req.body.doc12year, req.body.doc12school, req.body.doc12per];
-  let mbbs = [
-    req.body.docMBBSyear,
-    req.body.docMBBSschool,
-    req.body.docMBBSper,
-  ];
-  let others = [req.body.docEXyear, req.body.docEXschool, req.body.docEXper];
+exports.upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+}).single("docPhoto");
 
+exports.getform = async (req, res, next) => {
   const token = req.cookies.jwt;
   const tokenParts = token.split(".");
   const encodedPayload = tokenParts[1];
@@ -30,34 +44,85 @@ exports.addProfile = async (req, res, next) => {
   const user = JSON.parse(rawPayload);
   const UserId = mongoose.mongo.ObjectId(user.id);
   console.log("user id: " + UserId);
-  // console.log(req.userDel.id);
+  const userRoute = await users.findById(user.id);
+  console.log(userRoute);
 
-  const doctor = await doctors.create({
-    name: req.body.docName,
-    phoneNum: req.body.docPhnNumber,
-    dob: req.body.docDOB,
-    userDel: user.id,
-    gander: req.body.gander,
-    address: req.body.docAddress,
-    schoolInfo: school,
-    collegeInfo: college,
-    mbbsInfo: mbbs,
-    otherDegInfo: others,
-    extraQuility: req.body.extraQuality,
-    workdPlace: req.body.docworkPlace,
-    currentPosition: req.body.docPosition,
-    tobTitle: req.body.docTitle,
-    pastHistory: req.body.docHisotry,
-    exprience: req.body.docExp,
-    specialties: spe,
-    socialMedia: links,
-  });
-  // const doctor = await doctors.create(req.body);
-  console.log(doctor);
-  // res.status(200).json({
-  //   data: doctor,
-  // });
-  res.status(200).redirect("/doctor/profile");
+  if (userRoute.isCompleted === true) {
+    res.status(200).redirect("/doctor/profile");
+  } else {
+    res.status(200).render("docinput", {
+      title: "DocBook || Doctor Registration",
+    });
+  }
+  // console.log(req.body.user);
+  // outputs 'bob
+};
+
+exports.addProfile = async (req, res, next) => {
+  try {
+    let spe = req.body.speciality;
+    spe = spe.split(",");
+    let links = [req.body.facebook, req.body.linkedIn];
+    let school = [req.body.doc10year, req.body.doc10school, req.body.doc10per];
+    let college = [req.body.doc12year, req.body.doc12school, req.body.doc12per];
+    let mbbs = [
+      req.body.docMBBSyear,
+      req.body.docMBBSschool,
+      req.body.docMBBSper,
+    ];
+    let others = [req.body.docEXyear, req.body.docEXschool, req.body.docEXper];
+
+    const token = req.cookies.jwt;
+    const tokenParts = token.split(".");
+    const encodedPayload = tokenParts[1];
+    const rawPayload = atob(encodedPayload);
+    const user = JSON.parse(rawPayload);
+    const UserId = mongoose.mongo.ObjectId(user.id);
+    console.log("user id: " + UserId);
+    // console.log(req.userDel.id);
+
+    // console.log(req.file);
+    let imgName = req.file.filename;
+
+    const doctor = await doctors.create({
+      name: req.body.docName,
+      phoneNum: req.body.docPhnNumber,
+      dob: req.body.docDOB,
+      userDel: user.id,
+      gander: req.body.gander,
+      address: req.body.docAddress,
+      schoolInfo: school,
+      collegeInfo: college,
+      mbbsInfo: mbbs,
+      otherDegInfo: others,
+      extraQuility: req.body.extraQuality,
+      workdPlace: req.body.docworkPlace,
+      currentPosition: req.body.docPosition,
+      tobTitle: req.body.docTitle,
+      pastHistory: req.body.docHisotry,
+      exprience: req.body.docExp,
+      profileImg: imgName,
+      specialties: spe,
+      socialMedia: links,
+    });
+
+    const updateUser = await users.updateOne(
+      { _id: UserId },
+      {
+        $set: {
+          isCompleted: true,
+        },
+      }
+    );
+    // const doctor = await doctors.create(req.body);
+    // console.log(doctor);
+    // res.status(200).json({
+    //   data: doctor,
+    // });
+    res.status(200).redirect("/doctor/profile");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.getDoc = async (req, res, next) => {
@@ -70,21 +135,39 @@ exports.getDoc = async (req, res, next) => {
   const userData = userRole.userInfo;
   const getDoctor = await doctors
     .findById(userData[0].id)
-    .populate({ path: "userDel chambers" });
+    .populate({ path: "userDel chambers" })
+    .populate({ path: "myAppoinments", populate: { path: "chamberData" } });
 
   const doctorCham = getDoctor.chambers;
-  // console.log(doctorCham);
+  console.log(getDoctor.myAppoinments);
+
+  const appointmentsData = getDoctor.myAppoinments.sort(function (a, b) {
+    return a.date - b.date;
+  });
+  for (const dateIn of appointmentsData) {
+    console.log(dateIn.date.toLocaleDateString());
+  }
+
+  // console.log(
+  //   appointmentsData.sort(function (a, b) {
+  //     return a.date - b.date;
+  //   })
+  // );
 
   // console.log(userData[0]);
   res.status(200).render("docProfile", {
     getDoctor,
     doctorCham,
+    appointmentsData,
+    title: `DocBook || ${getDoctor.name}`,
   });
 };
 
 exports.getChamberForm = async (req, res, next) => {
   try {
-    res.status(201).render("add-chamber");
+    res.status(201).render("add-chamber", {
+      title: "DocBook || Add Chamber",
+    });
   } catch (error) {
     res.status(202).send(error.message);
   }
@@ -140,12 +223,6 @@ exports.getDetails = async (req, res, next) => {
   try {
     const doc = await doctors
       .findOne({ slug: req.params.slug })
-      .populate({
-        path: "myAppoinments",
-        populate: {
-          path: "patientsData",
-        },
-      })
       .populate({ path: "userDel chambers" });
 
     let chamList = doc.chambers;
@@ -159,6 +236,19 @@ exports.getDetails = async (req, res, next) => {
   } catch (error) {
     res.status(202).send(error.message);
   }
+};
+
+exports.imgForm = (req, res, next) => {
+  res.status(200).render("img", {
+    title: "TEst",
+  });
+};
+exports.imgAdd = async (req, res, next) => {
+  const newImg = await newTest.create({
+    name: req.body.name,
+    imgUpload: req.file.filename,
+  });
+  console.log(newImg);
 };
 
 // const checkTime = (arr) => {
