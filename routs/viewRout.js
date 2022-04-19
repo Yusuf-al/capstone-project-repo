@@ -2,6 +2,7 @@ const express = require("express");
 const viewController = require("../Controller/viewController");
 const authController = require("./../Controller/userController");
 const docCon = require("./../Controller/doctorController");
+const userController = require("./../Controller/userController");
 // const bookApp = require("./book-rout");
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.get(
 );
 router.get("/test-img", docCon.imgForm);
 router.post("/test-img", docCon.upload, docCon.imgAdd);
+router.get("/log-out", userController.logOut);
 // router.get("/ad-doctor", viewController.docform);
 // router.post("/ad-doctor", viewController.addDoctor);
 // router.post('/:slug/book-appointment', viewController.appoint);

@@ -13,4 +13,6 @@ router
   )
   .post(bookController.bookAppoint);
 
+router.get("/cancel/:id", bookController.cancelApp);
+
 module.exports = router;

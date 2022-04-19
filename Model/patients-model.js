@@ -45,7 +45,7 @@ const patientSchema = new mongoose.Schema(
 
 patientSchema.virtual("myAppoinments", {
   ref: "AppointmentsTable",
-  foreignField: "appointmentData",
+  foreignField: "patientData",
   localField: "_id",
 });
 

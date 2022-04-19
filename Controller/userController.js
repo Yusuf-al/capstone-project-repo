@@ -204,3 +204,8 @@ exports.authPer = (role) => {
     next();
   };
 };
+
+exports.logOut = (req, res, next) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/user/log-in");
+};

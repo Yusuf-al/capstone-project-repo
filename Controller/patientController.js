@@ -22,13 +22,23 @@ exports.getProfile = async (req, res, next) => {
     const userData = userRole.patientInfo;
     const userInfo = await generalUser
       .findById(userData[0].id)
-      .populate({ path: "userDel myAppoinments" });
+      .populate({ path: "userDel" });
 
-    // console.log(doctorCham);
+    const appData = await generalUser.findById(userData[0].id).populate({
+      path: "myAppoinments",
+      populate: {
+        path: "doctorData chamberData",
+      },
+    });
 
-    console.log(userInfo);
+    // for (let data of appData.myAppoinments) {
+    //   console.log(data);
+    // }
+    const appointments = appData.myAppoinments;
+
     res.status(200).render("useProfile", {
       userInfo,
+      appointments,
       title: `DocBook || ${userInfo.name}`,
     });
   } catch (error) {

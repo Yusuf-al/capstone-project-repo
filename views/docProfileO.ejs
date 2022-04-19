@@ -1,29 +1,4 @@
-<nav class="container nav-container">
-  <section class="search" id="search">
-    <div class="profile-img">
-      <img src="" alt="" />
-    </div>
-    <input
-      type="text"
-      id="search-input"
-      class="serach-input"
-      placeholder="Search"
-    />
-    <i class="fas fa-search search-icon icon"></i>
-  </section>
-  <section class="nav-item">
-    <i id="notifi-popup" class="far fa-bell not-icon icon"></i>
-    <div id="log-out-pop" class="profile-img">
-      <img src="" alt="" />
-    </div>
-  </section>
-  <div class="log-in-popup">
-    <a href="#">Profile</a>
-    <a href="#">Log out</a>
-  </div>
-
-  <div class="noti-popup"></div>
-</nav>
+<%- include ('nav.ejs') %>
 <main class="container">
   <section class="intro-section-dp dp-container">
     <div class="profile-img-dp">
@@ -52,10 +27,9 @@
         <div class="speciality-dp">
           <h4>Speciality</h4>
           <div class="speciality-info-dp">
-            <p><%= doc.specialties[0]%></p>
-            <p><%= doc.specialties[1]%></p>
-            <p><%= doc.specialties[2]%></p>
-            <p><%= doc.specialties[3]%></p>
+            <% doc.specialties.forEach((spl,i)=> {%>
+            <p><%= spl%></p>
+            <% }) %>
           </div>
         </div>
       </div>

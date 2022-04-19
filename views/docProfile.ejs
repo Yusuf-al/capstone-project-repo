@@ -24,6 +24,7 @@
       <a href="/doctor/add-chamber"
         ><i class="fas fa-clinic-medical icn"></i> Add chamber</a
       >
+      <a href="/log-out"><i class="fas fa-sign-out-alt icn"></i> Log out</a>
     </div>
   </section>
   <section class="sec-com" id="profile">
@@ -68,10 +69,9 @@
         <h2 class="info-text-evn"><%= getDoctor.exprience%></h2>
         <h2 class="info-text-odd">Speciality</h2>
         <h2 class="info-text-evn">
-          <span><%= getDoctor.specialties[0]%></span
-          ><span><%= getDoctor.specialties[1]%></span>
-          <span><%= getDoctor.specialties[2]%></span
-          ><span><%= getDoctor.specialties[3]%></span>
+          <% getDoctor.specialties.forEach((spl,i)=> {%>
+          <span><%= spl%></span>
+          <% }) %>
         </h2>
       </div>
     </div>

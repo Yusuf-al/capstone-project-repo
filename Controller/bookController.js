@@ -67,3 +67,8 @@ exports.bookAppoint = async (req, res, next) => {
     res.send(error.message);
   }
 };
+
+exports.cancelApp = async (req, res, next) => {
+  const item = await appointTable.findOneAndDelete({ slug: req.params.slug });
+  res.status(200).redirect("/patient/my-profile");
+};

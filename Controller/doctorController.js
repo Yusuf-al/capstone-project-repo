@@ -139,14 +139,10 @@ exports.getDoc = async (req, res, next) => {
     .populate({ path: "myAppoinments", populate: { path: "chamberData" } });
 
   const doctorCham = getDoctor.chambers;
-  console.log(getDoctor.myAppoinments);
 
   const appointmentsData = getDoctor.myAppoinments.sort(function (a, b) {
     return a.date - b.date;
   });
-  for (const dateIn of appointmentsData) {
-    console.log(dateIn.date.toLocaleDateString());
-  }
 
   // console.log(
   //   appointmentsData.sort(function (a, b) {
@@ -221,6 +217,17 @@ exports.addChamber = async (req, res, next) => {
 
 exports.getDetails = async (req, res, next) => {
   try {
+    const token = req.cookies.jwt;
+    const tokenParts = token.split(".");
+    const encodedPayload = tokenParts[1];
+    const rawPayload = atob(encodedPayload);
+    const user = JSON.parse(rawPayload);
+
+    const userRole = await users
+      .findById(user.id)
+      .populate({ path: "patientInfo" });
+    const pat = userRole.patientInfo[0];
+
     const doc = await doctors
       .findOne({ slug: req.params.slug })
       .populate({ path: "userDel chambers" });
@@ -231,6 +238,7 @@ exports.getDetails = async (req, res, next) => {
     res.status(200).render("docProfileO", {
       doc,
       chamList,
+      pat,
       title: `DocBook || ${doc.name}`,
     });
   } catch (error) {

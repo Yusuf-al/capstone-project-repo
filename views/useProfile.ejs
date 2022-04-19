@@ -10,6 +10,7 @@
       <a href="#" onclick="showAppointmentList()"
         ><i class="fas fa-clinic-medical icn"></i>Appointment List</a
       >
+      <a href="/log-out"><i class="fas fa-sign-out-alt icn"></i> Log out</a>
     </div>
   </section>
   <section id="profile">
@@ -54,53 +55,19 @@
             </tr>
           </thead>
           <tbody>
+            <% appointments.forEach((appInfo,i)=> {%>
             <tr>
-              <td class="column1">1</td>
-              <td class="column2">Khalil Chamber</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">23/09/2022</td>
+              <td class="column1"><%= i+1 %></td>
+              <td class="column2"><%= appInfo.doctorData.name %></td>
+              <td class="column4"><%= appInfo.chamberData.chamberName %></td>
+              <td class="column5"><%= appInfo.date.toLocaleDateString()%></td>
               <td class="column6">
-                <i class="far fa-trash-alt"></i> <i class="far fa-edit"></i>
+                <a href="/cancel/<%= appInfo.id%>"
+                  ><i class="far fa-trash-alt"></i
+                ></a>
               </td>
             </tr>
-            <tr>
-              <td class="column1">2</td>
-              <td class="column2">Khalil Chamber</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">23/09/2022</td>
-              <td class="column6">
-                <i class="far fa-trash-alt"></i><i class="far fa-edit"></i>
-              </td>
-            </tr>
-            <tr>
-              <td class="column1">3</td>
-              <td class="column2">Khalil Chamber</td>
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">23/09/2022</td>
-              <td class="column6">
-                <i class="far fa-trash-alt"></i><i class="far fa-edit"></i>
-              </td>
-            </tr>
-            <tr>
-              <td class="column1">4</td>
-              <td class="column2">Khalil Chamber</td>
-
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">23/09/2022</td>
-              <td class="column6">
-                <i class="far fa-trash-alt"></i><i class="far fa-edit"></i>
-              </td>
-            </tr>
-            <tr>
-              <td class="column1">5</td>
-              <td class="column2">Khalil Chamber</td>
-
-              <td class="column4">Disco Dancer</td>
-              <td class="column5">23/09/2022</td>
-              <td class="column6">
-                <i class="far fa-trash-alt"></i><i class="far fa-edit"></i>
-              </td>
-            </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>

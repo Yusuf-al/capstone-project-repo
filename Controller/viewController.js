@@ -19,8 +19,6 @@ exports.getall = async (req, res, next) => {
     const resp = await getdata.json();
     const allRes = resp;
 
-    console.log(allRes.cases_time_series[564]);
-
     let data = allRes.cases_time_series[564];
 
     const token = req.cookies.jwt;
@@ -29,13 +27,10 @@ exports.getall = async (req, res, next) => {
     const rawPayload = atob(encodedPayload);
     const user = JSON.parse(rawPayload);
     const UserId = mongoose.mongo.ObjectId(user.id);
-    console.log("user id: " + UserId);
-    console.log(token);
 
     const patient = await users
       .findById(user.id)
       .populate({ path: "patientInfo" });
-    console.log(patient.patientInfo);
     const pat = patient.patientInfo[0];
 
     res.status(200).render("index", {
