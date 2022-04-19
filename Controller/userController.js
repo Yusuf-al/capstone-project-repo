@@ -8,12 +8,12 @@ const sendVerifyMail = async (userEmail, userid) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "naiem.n123@gmail.com",
-        pass: "Yusuf@Al@Naiem23",
+        user: "docbookofficial2022@gmail.com",
+        pass: "DocBook@2022",
       },
     });
     const mailOptions = {
-      from: "ADMIN <naiem.n123@gmail.com>",
+      from: "ADMIN <docbookofficial2022@gmail.com>",
       to: userEmail,
       subject: "Email Verification",
       html: `<p>Welcome to DocBook world <br> User Security is priority <br> So Please Click the link below to verify your email <br>
