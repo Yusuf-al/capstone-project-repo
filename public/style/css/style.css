@@ -42,6 +42,9 @@ a{
     border: none;
     outline: none;
 }
+img{
+    object-fit: cover;
+}
 
 
 .nav-container{
@@ -452,9 +455,11 @@ Doctor Profile page for Nomal User
     padding: 10px;
 }
 .profile-img-dp img{
-    width: 355px;
-    margin-top: 20px;
+    width: 300px;
+    margin-top: 10px;
+    margin-left: 10px;
     border-radius: 5%;
+    height: 280px;
 }
 .profile-info-dp{
     /* background-color: #6199ff; */
@@ -846,6 +851,7 @@ Doctor Profile Form
 
 .sec-div{
     width: 100%;
+    min-height: 1200px;
 }
 .information{
     display: flex;
@@ -853,7 +859,7 @@ Doctor Profile Form
     position: absolute;
     left: 0;
     width: 100%;
-    height: auto;
+    min-height: 600px;
     padding: 20px;
     transition: .5s;
     border-radius: 10px;
@@ -1483,4 +1489,18 @@ Doctor Main Profile Page
   height: 150px;
   width: 150px;
   border-radius: 50%;
+}
+.err-msg{
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    width: 310px;
+    padding: 10px;
+    height: 60px;
+    display: flex;
+    background-color: rgba(250, 71, 71, 0.641);
+    align-items: center;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
 }

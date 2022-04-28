@@ -122,6 +122,9 @@
       <h1><%= data.date%></h1>
     </div>
   </div>
+  <% if(message.length>0){%>
+  <div class="err-msg" id="err-msg"><%= message%></div>
+  <%}%>
 </main>
 
 <script>
@@ -140,4 +143,7 @@
     notification.classList.toggle(toggleClass);
     logProfile.classList.remove(toggleClass);
   });
+  setTimeout(function () {
+    $(".err-msg").remove();
+  }, 5000);
 </script>

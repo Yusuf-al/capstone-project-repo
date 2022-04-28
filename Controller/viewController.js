@@ -37,6 +37,7 @@ exports.getall = async (req, res, next) => {
       doctorList,
       data,
       pat,
+      message: req.flash("message"),
       title: "DocBook || Home",
     });
 

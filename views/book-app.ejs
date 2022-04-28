@@ -87,7 +87,7 @@
       </div>
       <div class="form-grp">
         <label for="patient-Phone">Date of Appoinment</label>
-        <input type="date" name="appDate" required />
+        <input type="date" id="app-date" name="appDate" required />
       </div>
       <div class="form-grp">
         <label for="patient-address">Enter Address</label>
@@ -108,10 +108,16 @@
           required
         ></textarea>
       </div>
-      <button class="btn next-btn" type="submit">Submit</button>
+      <button class="btn next-btn" onclick="dateCheck()" type="submit">
+        Submit
+      </button>
       <a onclick="showMy()" class="my-self-book">Book for yourself</a>
     </div>
   </form>
+  <h1><%= mess%></h1>
+  <% if(errorMsg.length>0){%>
+  <div class="err-msg" id="err-msg"><%= errorMsg%></div>
+  <%}%>
 </section>
 <script>
   const logOutPop = document.getElementById("log-out-pop");
@@ -119,6 +125,8 @@
   const logProfile = document.querySelector(".log-in-popup");
   const notification = document.querySelector(".noti-popup");
   const toggleClass = "toggle-class";
+  const msg = document.getElementById("msg");
+  const errMSG = document.getElementById("err-msg");
 
   logOutPop.addEventListener("click", function () {
     logProfile.classList.toggle(toggleClass);
@@ -149,8 +157,25 @@
   }
 
   function showMy() {
-    document.getElementById("patient-name").value = "Yusuf al Naiem";
-    document.getElementById("patient-phone").value = "0129324242";
-    document.getElementById("patient-address").value = "Rayenda bazar";
+    document.getElementById("patient-name").value =
+      "<%= userData.patientInfo.name%>";
+    document.getElementById("patient-phone").value =
+      "<%= userData.patientInfo.phoneNum%>";
+    document.getElementById("patient-address").value =
+      "<%= userData.patientInfo.address%>";
   }
+
+  let bookDate = document.getElementById("app-date");
+
+  let selectDate = bookDate.value;
+  let today = new Date().toLocaleDateString("en-CA");
+  function dateCheck(event) {
+    if (today > bookDate.value) {
+      console.log("Error Date");
+    }
+  }
+
+  setTimeout(function () {
+    $(".err-msg").remove();
+  }, 5000);
 </script>

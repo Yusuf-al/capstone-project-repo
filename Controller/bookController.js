@@ -11,6 +11,13 @@ exports.getBookingForm = async (req, res, next) => {
     const encodedPayload = tokenParts[1];
     const rawPayload = atob(encodedPayload);
     const user = JSON.parse(rawPayload);
+    const userData = await userTable
+      .findById(user.id)
+      .populate({ path: "patientInfo" });
+
+    const patientId = userData.patientInfo[0];
+    // console.log(userData);
+
     const doctorData = await doctor
       .findOne({ slug: req.params.slug })
       .populate({ path: "chambers" });
@@ -24,6 +31,9 @@ exports.getBookingForm = async (req, res, next) => {
     res.status(200).render("book-app", {
       doc,
       cham,
+      userData,
+      mess: " ",
+      errorMsg: req.flash("message"),
       title: "DocBook || Book Appoinment",
     });
   } catch (error) {
@@ -50,25 +60,43 @@ exports.bookAppoint = async (req, res, next) => {
     const docId = doctorID.id;
     const cham = chamberData;
 
-    const appBook = await appointTable.create({
-      date: req.body.appDate,
-      address: req.body.patientAddress,
-      contactNo: req.body.patientPhone,
-      patientName: req.body.patientName,
-      healthIssu: req.body.healthIssue,
-      doctorData: docId,
-      patientData: patientId,
-      chamberData: req.params.id,
-    });
+    let today = new Date().toLocaleDateString("en-CA");
+    let checkDate = req.body.appDate;
+    let bookDate = new Date(req.body.appDate).toDateString();
+    console.log(bookDate);
 
-    console.log(appBook);
-    res.redirect("/");
+    let day = bookDate.split(" ");
+    let weekDay = day[0].toLocaleLowerCase();
+
+    if (today > checkDate) {
+      req.flash("message", "Date cannot be in past");
+      res.redirect("back");
+    } else if (chamberData[weekDay][2] === "off-day") {
+      req.flash("message", "Doctor will not be available on this day");
+      res.redirect("back");
+    } else {
+      const appBook = await appointTable.create({
+        date: req.body.appDate,
+        address: req.body.patientAddress,
+        contactNo: req.body.patientPhone,
+        patientName: req.body.patientName,
+        healthIssu: req.body.healthIssue,
+        doctorData: docId,
+        patientData: patientId,
+        chamberData: req.params.id,
+      });
+
+      // res.redirect("back");
+      // console.log("Appointment Booked");
+      req.flash("message", "Appointment Booked successfully");
+      res.redirect("/");
+    }
   } catch (error) {
     res.send(error.message);
   }
 };
 
 exports.cancelApp = async (req, res, next) => {
-  const item = await appointTable.findOneAndDelete({ slug: req.params.slug });
-  res.status(200).redirect("/patient/my-profile");
+  const item = await appointTable.findOneAndDelete(req.params.id);
+  res.status(200).redirect("back");
 };

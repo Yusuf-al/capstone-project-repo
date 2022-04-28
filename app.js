@@ -8,6 +8,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const ejs = require("ejs");
+const flash = require("connect-flash");
+const session = require("express-session");
 const expressLayout = require("express-ejs-layouts");
 const path = require("path");
 
@@ -20,6 +22,17 @@ app.use(
     extended: true,
   })
 );
+
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    cookie: { maxAge: 600 },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(flash());
 
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
